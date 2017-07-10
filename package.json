@@ -1,0 +1,32 @@
+{
+  "name": "lysis-restangular-services-generator",
+  "version": "0.0.6",
+  "description": "Generate Restangular services for JSON LD backend",
+  "main": "index.js",
+  "contributors": [
+    "David Duquenoy"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/momenttech/lysis-restangular-services-generator"
+  },
+  "bugs": {
+    "url": "https://github.com/momenttech/lysis-restangular-services-generator/issues"
+  },
+  "homepage": "https://momenttech.github.io/lysis-restangular-services-generator",
+  "keywords": [
+    "lysis",
+    "jsonld",
+    "rest",
+    "api",
+    "generator",
+    "typescript",
+    "angular"
+  ],
+  "devDependencies": {},
+  "dependencies": {
+    "api-lysis": "0.0.4"
+  },
+  "scripts": {}
+}
