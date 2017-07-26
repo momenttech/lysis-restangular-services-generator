@@ -27,7 +27,7 @@ var restangularServicesGenerator = function(parameters) {
     var className = lysisUtils.toCamelCase(resource.name, 'upper');
 
     // if service target files exists, do not overwrite (except when required from config)
-    if (!lysisUtils.exists(`${basePath}/${className}.ts`)) {
+    if (!lysisUtils.exists(`${basePath}/${className}.service.ts`)) {
       lysisUtils.createFile('resource-service', `${basePath}/${className}.service.ts`, context);
     }
   }

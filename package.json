@@ -1,6 +1,6 @@
 {
   "name": "lysis-restangular-services-generator",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Generate Restangular services for JSON LD backend",
   "main": "index.js",
   "contributors": [
@@ -24,9 +24,9 @@
     "typescript",
     "angular"
   ],
-  "devDependencies": {},
-  "dependencies": {
+  "devDependencies": {
     "api-lysis": "^0.0.5"
   },
+  "dependencies": {},
   "scripts": {}
 }

@@ -160,8 +160,3 @@ Services files are generated in `my-backend/services`.
 If `dir` is not set, the default value is `backend-services`.
 
 `classPath` is the path to class files. By default it is set to `../backend-classes`.
-
-
-todo:
-
-- force extended class overwrite (default false)
