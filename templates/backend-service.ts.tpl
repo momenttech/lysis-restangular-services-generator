@@ -9,14 +9,22 @@ export abstract class BackendService<T> {
   protected idField: string = 'id';
 
   constructor(protected restangular: Restangular) {
-    var baseItem = new (this.class)();
-    var idField = this.idField;
-
-    this.restangular.provider.addElementTransformer(this.resource, function(item) {
-      if (!item[idField]) return item;
-      // add resource class methods to the item, to turn it into a resource-object-like
+    // transform restangular items as class instances
+    this.restangular.provider.addElementTransformer(this.resource, item => {
+      if (!item[this.idField]) return item;
+      // preserve static, get and set
+      var baseItem = new (this.class)();
+      item = Object.assign(baseItem, item);
+      // delete Restangular methods (and prevent from using it...)
+      for (let method in item) {
+        if (typeof item[method] === 'function') {
+          delete item[method];
+        }
+      }
+      // add resource class methods to the item
+      baseItem = new (this.class)();
       for (let method in baseItem) {
-        if(typeof baseItem[method] == 'function') {
+        if (typeof baseItem[method] === 'function') {
           item[method] = baseItem[method];
         }
       }
