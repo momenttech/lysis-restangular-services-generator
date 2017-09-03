@@ -20,6 +20,9 @@ var restangularServicesGenerator = function(parameters) {
     parameters.generatorConfig.classPath = '../backend-classes';
   }
 
+  lysisUtils.copyFile(path.join(templatePath, 'backend-service.ts.tpl'), `${basePath}/backend.service.ts`);
+  lysisUtils.copyFile(path.join(templatePath, 'RestangularConfigFactory.ts.tpl'), `${basePath}/RestangularConfigFactory.ts`);
+
   // create resources files from templates
   for (var resourceName in parameters.context.resources) {
     var resource = parameters.context.resources[resourceName];

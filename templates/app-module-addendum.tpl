@@ -15,3 +15,6 @@ providers: [
   {{ ucc name }}Service,
   {{/each}}
 ]
+
+Take a look to the generator documentation for further details:
+https://github.com/momenttech/lysis-restangular-services-generator
