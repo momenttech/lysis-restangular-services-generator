@@ -70,4 +70,10 @@ export abstract class BackendService<T> {
   remove(item: T): Observable<any> {
     return this.restangular.one(this.resource, item[this.idField]).remove();
   }
+
+  collectionize(...items: T[]): T[] {
+    var collection = items;
+    collection['pagination'] = { current: 1, last: 1, totalItems: collection.length };
+    return collection;
+  }
 }
