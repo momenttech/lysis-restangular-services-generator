@@ -1,3 +1,5 @@
+// This file should not be modified, as it can be overwritten by the generator.
+
 import { Injectable } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
 import { Observable } from 'rxjs/Observable';

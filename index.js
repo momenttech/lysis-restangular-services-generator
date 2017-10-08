@@ -6,7 +6,6 @@ var restangularServicesGenerator = function(parameters) {
   var templatePath = path.join(__dirname, 'templates');
 
   // templates
-  lysisUtils.registerTemplate('backend-service', path.join(templatePath, 'backend-service.ts.tpl'));
   lysisUtils.registerTemplate('resource-service', path.join(templatePath, 'resource-service.ts.tpl'));
   lysisUtils.registerTemplate('index', path.join(templatePath, 'index.ts.tpl'));
   lysisUtils.registerTemplate('app-module-addendum', path.join(templatePath, 'app-module-addendum.tpl'));
@@ -22,6 +21,10 @@ var restangularServicesGenerator = function(parameters) {
 
   lysisUtils.copyFile(path.join(templatePath, 'backend-service.ts.tpl'), `${basePath}/backend.service.ts`);
   lysisUtils.copyFile(path.join(templatePath, 'RestangularConfigFactory.ts.tpl'), `${basePath}/RestangularConfigFactory.ts`);
+  lysisUtils.copyFile(path.join(templatePath, 'backend-config.interface.ts.tpl'), `${basePath}/backend-config.interface.ts`);
+  if (!lysisUtils.exists(`${basePath}/backend-config.ts`)) {
+    lysisUtils.copyFile(path.join(templatePath, 'backend-config.ts.tpl'), `${basePath}/backend-config.ts`);
+  }
 
   // create resources files from templates
   for (var resourceName in parameters.context.resources) {
@@ -34,8 +37,6 @@ var restangularServicesGenerator = function(parameters) {
       lysisUtils.createFile('resource-service', `${basePath}/${className}.service.ts`, context);
     }
   }
-
-  lysisUtils.createFile('backend-service', `${basePath}/backend.service.ts`, parameters.context);
 
   // create index file
   lysisUtils.createFile('index', `${basePath}/index.ts`, parameters.context);
