@@ -1,10 +1,8 @@
 // This file should not be modified, as it can be overwritten by the generator.
 
 import { Subject } from 'rxjs/Subject';
-import { BackendConfig } from './backend-config';
 
-export function RestangularConfigFactory(RestangularProvider) {
-  var config = new BackendConfig;
+export function RestangularConfigFactory(RestangularProvider, config) {
   RestangularProvider.setBaseUrl(config.baseUrl);
   RestangularProvider.setRestangularFields({id: '@id'}); // only for items
   RestangularProvider.setSelfLinkAbsoluteUrl(false);

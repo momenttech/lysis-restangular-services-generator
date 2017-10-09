@@ -21,10 +21,6 @@ var restangularServicesGenerator = function(parameters) {
 
   lysisUtils.copyFile(path.join(templatePath, 'backend-service.ts.tpl'), `${basePath}/backend.service.ts`);
   lysisUtils.copyFile(path.join(templatePath, 'RestangularConfigFactory.ts.tpl'), `${basePath}/RestangularConfigFactory.ts`);
-  lysisUtils.copyFile(path.join(templatePath, 'backend-config.interface.ts.tpl'), `${basePath}/backend-config.interface.ts`);
-  if (!lysisUtils.exists(`${basePath}/backend-config.ts`)) {
-    lysisUtils.copyFile(path.join(templatePath, 'backend-config.ts.tpl'), `${basePath}/backend-config.ts`);
-  }
 
   // create resources files from templates
   for (var resourceName in parameters.context.resources) {
