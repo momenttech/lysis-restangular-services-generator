@@ -38,10 +38,10 @@ export abstract class BackendService<T> {
     this.idField = idField;
   }
 
-  makeCriterias(pageNumber: number, criterias: Object): Object {
-    if (!criterias) criterias = {};
-    if (pageNumber) criterias['page'] = pageNumber;
-    return criterias;
+  makeCriterias(pageNumber: number, criterias: Object = {}): Object {
+    var pageCriteria = {};
+    if (pageNumber) pageCriteria['page'] = pageNumber;
+    return Object.assign(pageCriteria, criterias);
   }
 
   get(id: any): Observable<T> {
@@ -57,8 +57,10 @@ export abstract class BackendService<T> {
   }
 
   getAllByFilter(filter: string, value: any, pageNumber?: number, criterias: Object = {}): Observable<T[]> {
-    criterias[filter] = value;
-    return this.getAll(pageNumber, criterias);
+    var getCriterias = {};
+    getCriterias[filter] = value;
+    Object.assign(getCriterias, criterias);
+    return this.getAll(pageNumber, getCriterias);
   }
 
   add(item: T): Observable<T> {
