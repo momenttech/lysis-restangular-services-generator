@@ -36,6 +36,7 @@ export function RestangularConfigFactory(RestangularProvider, config) {
   });
 
   RestangularProvider.addFullRequestInterceptor(function (element, operation) {
+    element = Object.assign({}, element);
     RestangularProvider.requestCount.next(++RestangularProvider.requestCounter);
     // remove the id field from post operations
     if ((operation === 'post') && (element.id !== undefined)) {
@@ -49,6 +50,7 @@ export function RestangularConfigFactory(RestangularProvider, config) {
         }
       }
     }
+    return {element: element};
   });
 
   // intercept JSON LD to turn it into JSON/Restangular object(s)

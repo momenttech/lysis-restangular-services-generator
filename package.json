@@ -1,6 +1,6 @@
 {
   "name": "lysis-restangular-services-generator",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Generate Restangular services for JSON LD backend",
   "main": "index.js",
   "contributors": [
