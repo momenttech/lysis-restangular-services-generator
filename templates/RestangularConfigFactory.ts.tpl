@@ -1,10 +1,10 @@
 // This file should not be modified, as it can be overwritten by the generator.
 
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 export function RestangularConfigFactory(RestangularProvider, config) {
   RestangularProvider.setBaseUrl(config.baseUrl);
-  RestangularProvider.setRestangularFields({id: '@id'}); // only for items
+  RestangularProvider.setRestangularFields({ id: '@id' }); // only for items
   RestangularProvider.setSelfLinkAbsoluteUrl(false);
 
   // in-progress requests counter
@@ -21,7 +21,7 @@ export function RestangularConfigFactory(RestangularProvider, config) {
   RestangularProvider.changeHeader = (key: string, value: string) => {
     RestangularProvider.headersSubject.next({ key: key, value: value });
   }
-  RestangularProvider.headersSubject.subscribe((header: {key: string, value: string}) => {
+  RestangularProvider.headersSubject.subscribe((header: { key: string, value: string }) => {
     RestangularProvider.configuration.defaultHeaders[header.key] = header.value;
   });
 
@@ -35,22 +35,35 @@ export function RestangularConfigFactory(RestangularProvider, config) {
     }
   });
 
-  RestangularProvider.addFullRequestInterceptor(function (element, operation) {
-    element = Object.assign({}, element);
-    RestangularProvider.requestCount.next(++RestangularProvider.requestCounter);
-    // remove the id field from post operations
-    if ((operation === 'post') && (element.id !== undefined)) {
-      delete element.id;
+  const prepareElement = (element) => {
+    const getCircularReplacer = () => {
+      var level = 0;
+      return (key, value) => {
+        if (level && (value !== null) && (typeof value === 'object') && value['@id']) {
+          return value['@id'];
+        }
+        level++;
+        return value;
+      };
+    };
+    try {
+      var copiedElement = JSON.parse(JSON.stringify(element, getCircularReplacer()));
+    } catch (error) {
+      console.error('Circular reference problem while copying the object to PUT/POST', element, error);
+      throw new Error('Circular reference problem while copying the object to PUT/POST');
     }
+    return copiedElement;
+  }
+
+  RestangularProvider.addFullRequestInterceptor(function (element, operation) {
+    RestangularProvider.requestCount.next(++RestangularProvider.requestCounter);
     // change nested property into iri identifier for put and post operations
     if ((operation === 'post') || (operation === 'put')) {
-      for (let prop of Object.keys(element)) {
-        if ((element[prop] !== null) && (typeof(element[prop]) === 'object') && element[prop]['@id']) {
-          element[prop] = element[prop]['@id'];
-        }
-      }
+      element = prepareElement(element);
+      // remove the id field from post operations
+      if ((operation === 'post') && (element.id !== undefined)) delete element.id;
     }
-    return {element: element};
+    return { element: element };
   });
 
   // intercept JSON LD to turn it into JSON/Restangular object(s)
