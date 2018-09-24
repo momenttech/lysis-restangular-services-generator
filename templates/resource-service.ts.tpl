@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BackendService } from './backend.service';
 import { {{ ucc resource.title }} } from '{{ classPath }}';
-//import { Observable } from 'rxjs/Observable';
+// import { Observable } from 'rxjs';
 
 @Injectable()
 export class {{ ucc resource.name }}Service extends BackendService<{{ ucc resource.title }}> {

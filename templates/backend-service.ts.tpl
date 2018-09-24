@@ -2,30 +2,36 @@
 
 import { Injectable } from '@angular/core';
 import { Restangular } from 'ngx-restangular';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export abstract class BackendService<T> {
   protected abstract get resource(): string;
   protected abstract get class(): any;
-  protected idField: string = 'id';
+  protected idField = 'id';
 
   constructor(protected restangular: Restangular) {
+    // avoid issue with this.resource ...
+    this.setup();
+  }
+
+  setup(): void {
     // transform restangular items as class instances
     this.restangular.provider.addElementTransformer(this.resource, item => {
       if (!item[this.idField]) return item;
       // preserve static, get and set
-      var baseItem = new (this.class)();
+      let baseItem = new (this.class)();
       item = Object.assign(baseItem, item);
       // delete Restangular methods (and prevent from using it...)
-      for (let method in item) {
+      for (const method in item) {
         if (typeof item[method] === 'function') {
           delete item[method];
         }
       }
+
       // add resource class methods to the item
       baseItem = new (this.class)();
-      for (let method in baseItem) {
+      for (const method in baseItem) {
         if (typeof baseItem[method] === 'function') {
           item[method] = baseItem[method];
         }
@@ -43,7 +49,7 @@ export abstract class BackendService<T> {
   }
 
   makeCriterias(pageNumber: number, criterias: Object = {}): Object {
-    var pageCriteria = this.makeCriteriasCopy(criterias);
+    const pageCriteria = this.makeCriteriasCopy(criterias);
     if (pageNumber) pageCriteria['page'] = pageNumber;
     return pageCriteria;
   }
@@ -61,7 +67,7 @@ export abstract class BackendService<T> {
   }
 
   getAllByFilter(filter: string, value: any, pageNumber?: number, criterias: Object = {}): Observable<T[]> {
-    var getCriterias = this.makeCriteriasCopy(criterias);;
+    const getCriterias = this.makeCriteriasCopy(criterias);
     getCriterias[filter] = value;
     return this.getAll(pageNumber, getCriterias);
   }
@@ -79,7 +85,7 @@ export abstract class BackendService<T> {
   }
 
   collectionize(...items: T[]): T[] {
-    var collection = items;
+    const collection = items;
     collection['pagination'] = { current: 1, last: 1, totalItems: collection.length };
     return collection;
   }
