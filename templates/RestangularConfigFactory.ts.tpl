@@ -37,10 +37,14 @@ export function RestangularConfigFactory(RestangularProvider, config) {
 
   const prepareElement = (element) => {
     const getCircularReplacer = () => {
-      var level = 0;
+      let level = 0;
       return (key, value) => {
-        if (level && (value !== null) && (typeof value === 'object') && value['@id']) {
-          return value['@id'];
+        if (level && (value !== null) && (typeof value === 'object') && !(value instanceof Array)) {
+          if (value['@id']) {
+            return value['@id'];
+          } else if (!value['_resource']) {
+            return undefined;
+          }
         }
         level++;
         return value;
