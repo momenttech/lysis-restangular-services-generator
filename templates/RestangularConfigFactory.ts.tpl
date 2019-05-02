@@ -39,7 +39,7 @@ export function RestangularConfigFactory(RestangularProvider, config) {
     const getCircularReplacer = () => {
       let level = 0;
       return (key, value) => {
-        if (level && (value !== null) && (typeof value === 'object') && !(value instanceof Array)) {
+        if (level && (value !== null) && (typeof value === 'object') && !(value instanceof Array) && (value['@force-change'] === undefined)) {
           if (value['@id']) {
             return value['@id'];
           } else if (!value['_resource']) {

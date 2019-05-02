@@ -32,7 +32,7 @@ A service class is created for each resource.
 
 Example of service to handle books, in the generated file `Books.service.ts`:
 
-```
+```typescript
 import { Injectable } from '@angular/core';
 import { BackendService } from './backend.service';
 import { Books } from '../classes/Books';
@@ -49,7 +49,7 @@ export class BooksService extends BackendService<Books> {
 
 In a controller, to get books:
 
-```
+```typescript
 import { Component, OnInit } from '@angular/core';
 
 import { BooksService } from '../backend/services';
@@ -84,7 +84,7 @@ This allows you to update services to add helper methods.
 
 For example, this method extends the generated `ReviewService` to add a method to easily get reviews per book.
 
-```
+```typescript
 import { Injectable } from '@angular/core';
 import { BackendService } from './backend.service';
 import { Reviews } from '../classes/Reviews';
@@ -104,7 +104,7 @@ The request URI is for example: `http://my-backend/reviews?book.id=5`.
 
 However, the same result can be reached, using `getAllByFilter` directly in the controller, without additional method:
 
-```
+```typescript
 this.reviewsService.getAllByFilter('book.id', 5);
 ```
 
@@ -120,7 +120,7 @@ It should not be modified, as it is overwritten during further generations.
 
 If it is not already done, install api-lysis globally and as dev dependency:
 
-```
+```shell
 npm install api-lysis -g
 npm install api-lysis --save-dev
 ```
@@ -129,7 +129,7 @@ npm install api-lysis --save-dev
 
 Install this generator:
 
-```
+```shell
 npm install lysis-restangular-services-generator --save-dev
 ```
 
@@ -137,7 +137,7 @@ npm install lysis-restangular-services-generator --save-dev
 
 As the generated services work with ngx-restangular, it must be included in the project:
 
-```
+```shell
 npm install ngx-restangular --save
 ```
 
@@ -149,14 +149,14 @@ Main purpose is to ease JSON-LD data handling.
 
 In `app.module.ts`, import ngx-restangular and the configuration:
 
-```
+```typescript
 import { RestangularModule } from 'ngx-restangular';
 import { RestangularConfigFactory } from './backend/services/RestangularConfigFactory';
 ```
 
 Add a configuration function:
 
-```
+```typescript
 export function createRestangularConfigFactory(RestangularProvider) {
   return RestangularConfigFactory(RestangularProvider, { baseUrl: 'http://127.0.0.1:8000' });
 }
@@ -167,7 +167,7 @@ export function createRestangularConfigFactory(RestangularProvider) {
 
 And add it to `imports`:
 
-```
+```typescript
   imports: [
     // [...],
     RestangularModule.forRoot([], createRestangularConfigFactory)
@@ -176,7 +176,7 @@ And add it to `imports`:
 
 If you have scaffolded the project with angular CLI, the configuration function should look like:
 
-```
+```typescript
 import { environment } from '../environments/environment';
 
 // [...]
@@ -192,7 +192,7 @@ This assumes environment files contain a `apiUrl` property.
 
 Configuration sample:
 
-```
+```yaml
 apis:
   http://localhost:8000:
     basePath: 'my-backend'
