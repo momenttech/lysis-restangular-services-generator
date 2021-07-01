@@ -80,6 +80,10 @@ export abstract class BackendService<T> {
     return this.restangular.one(this.resource, item[this.idField]).customPUT(item);
   }
 
+  patch(item: Partial<T>): Observable<T> {
+    return this.restangular.one(this.resource, item[this.idField]).customPUT(item);
+  }
+
   remove(item: T): Observable<any> {
     return this.restangular.one(this.resource, item[this.idField]).remove();
   }
