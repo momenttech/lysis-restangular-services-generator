@@ -1,6 +1,7 @@
 // This file should not be modified, as it can be overwritten by the generator.
 
 import { Subject } from 'rxjs';
+import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 export function RestangularConfigFactory(RestangularProvider, config) {
   RestangularProvider.setBaseUrl(config.baseUrl);
@@ -119,4 +120,17 @@ export function RestangularConfigFactory(RestangularProvider, config) {
     }
     return data;
   });
+
+  HttpUrlEncodingCodec.prototype.encodeValue = function (value) {
+    return encodeURIComponent(value)
+      .replace(/%40/gi, '@')
+      .replace(/%3A/gi, ':')
+      .replace(/%24/gi, '$')
+      .replace(/%2C/gi, ',')
+      .replace(/%3B/gi, ';')
+      // .replace(/%2B/gi, '+')
+      .replace(/%3D/gi, '=')
+      .replace(/%3F/gi, '?')
+      .replace(/%2F/gi, '/');
+  };
 }
