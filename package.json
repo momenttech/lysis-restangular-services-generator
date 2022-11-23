@@ -25,7 +25,7 @@
     "angular"
   ],
   "devDependencies": {
-    "api-lysis": "^0.0.7"
+    "api-lysis": "^0.0.12"
   },
   "dependencies": {},
   "scripts": {}
